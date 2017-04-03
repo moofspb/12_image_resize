@@ -15,7 +15,7 @@ def get_script_args():
                         help='Width of the output image')
     parser.add_argument('-he', '--height', nargs='?', type=int, default=None,
                         help='Height of the output image')
-    parser.add_argument('-s', '--scale', nargs='?', type=int, default=None,
+    parser.add_argument('-s', '--scale', nargs='?', type=float, default=None,
                         help='Scale of the output image')
     parser.add_argument('-o', '--output_dir', nargs='?', default=None,
                         help='Directory where output image will be saved')
@@ -47,7 +47,7 @@ def get_sizes(input_path, width, height, scale):
     original_image = Image.open(input_path)
     original_proportions = original_image.width / original_image.height
     if scale:
-        return (original_image.width * scale), (original_image.height * scale)
+        return int(original_image.width * scale), int(original_image.height * scale)
     if width and height:
         return width, height
     if width:
@@ -60,6 +60,8 @@ def get_result_path(input_path, width, height, output_dir):
     original_dir, original_name = os.path.split(input_path)
     name, extension = original_name.split('.')
     result_name = '{}__{}x{}.{}'.format(name, width, height, extension)
+    if not original_dir:
+        return result_name
     if not output_dir:
         return '{}/{}'.format(original_dir, result_name)
 
