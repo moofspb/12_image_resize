@@ -1,6 +1,6 @@
 # Image Resizer
 
-Script resizes chosen image with desired
+Script resizes chosen image with desired proportions.
 
 # Installation
 
