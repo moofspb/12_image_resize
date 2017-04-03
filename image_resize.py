@@ -10,7 +10,7 @@ def get_script_args():
         2. Width and height.
         3. Scale relative to input file (can be less than 1).
            If scale is specified, width/height can\'t be set.""")
-    parser.add_argument('input_path', help='Path to a text file')
+    parser.add_argument('input_path', help='Path to a image file')
     parser.add_argument('-w', '--width', nargs='?', type=int, default=None,
                         help='Width of the output image')
     parser.add_argument('-he', '--height', nargs='?', type=int, default=None,
