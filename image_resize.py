@@ -23,8 +23,12 @@ def get_script_args():
     return args
 
 
+def open_image(path):
+    return Image.open(path)
+
+
 def check_args(input_path, width, height, scale):
-    original_image = Image.open(input_path)
+    original_image = open_image(input_path)
     original_proportions = original_image.width / original_image.height
     if width and height:
         result_proportions = width / height
@@ -36,7 +40,7 @@ def check_args(input_path, width, height, scale):
 
 
 def resize_image(input_path, width, height, scale, output_dir):
-    original_image = Image.open(input_path)
+    original_image = open_image(input_path)
     result_width, result_height = get_sizes(input_path, width, height, scale)
     result_image = original_image.resize((result_width, result_height))
     result_path = get_result_path(input_path, result_width, result_height, output_dir)
@@ -75,12 +79,9 @@ def save_image(image_data):
 
 
 if __name__ == '__main__':
-    params = get_script_args()
-    input_path = params.input_path
-    width = params.width
-    height = params.height
-    scale = params.scale
-    output_dir = params.output_dir
-    check_args(input_path, width, height, scale)
-    new_image = resize_image(input_path, width, height, scale, output_dir)
+    args = get_script_args()
+    input_path = args.input_path
+    output_dir = args.output_dir
+    check_args(input_path, args.width, args.height, args.scale)
+    new_image = resize_image(input_path, args.width, args.height, args.scale, output_dir)
     save_image(new_image)
