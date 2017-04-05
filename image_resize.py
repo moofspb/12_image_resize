@@ -39,12 +39,10 @@ def check_args(input_path, width, height, scale):
             raise Exception("Error! Scale and width/height can't be set at the same time!")
 
 
-def resize_image(input_path, width, height, scale, output_dir):
+def resize_image(input_path, width, height, scale):
     original_image = open_image(input_path)
     result_width, result_height = get_sizes(input_path, width, height, scale)
-    result_image = original_image.resize((result_width, result_height))
-    result_path = get_result_path(input_path, result_width, result_height, output_dir)
-    return result_image, result_path
+    return original_image.resize((result_width, result_height))
 
 
 def get_sizes(input_path, width, height, scale):
@@ -73,8 +71,7 @@ def get_result_path(input_path, width, height, output_dir):
         return '{}/{}'.format(output_dir, result_name)
 
 
-def save_image(image_data):
-    image, path = image_data
+def save_image(image, path):
     image.save(path)
 
 
@@ -83,5 +80,7 @@ if __name__ == '__main__':
     input_path = args.input_path
     output_dir = args.output_dir
     check_args(input_path, args.width, args.height, args.scale)
-    new_image = resize_image(input_path, args.width, args.height, args.scale, output_dir)
-    save_image(new_image)
+    result_image = resize_image(input_path, args.width, args.height, args.scale)
+    result_width, result_height = get_sizes(input_path, args.width, args.height, args.scale)
+    result_path = get_result_path(input_path, result_width, result_height, output_dir)
+    save_image(result_image, result_path)
